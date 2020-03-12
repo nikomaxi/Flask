@@ -3,8 +3,7 @@
 
 """Generate WebServer to handle request and get key and value of link
 
-	http://127.0.0.1:5000/login?username=max&password=pw1
-	handle the above request and select two keys (username, password)
+    http://127.0.0.1:5000/requestFreqKey?timeStampStart=tss&timeStampStopp=tsp&part=100&keywords%5B0%5D=bliblablub&keywords%5B0%5D=bliblablub2	handle the above request and select two keys (username, password)
 	return a array of passed key and values as html 
 """
 from flask import request
@@ -19,26 +18,33 @@ __status__ = "Final"
 # generate instence of Flask app
 app = Flask(__name__)
 
-@app.route("/login")
-def login():
+@app.route("/requestFreqKey")
+def requestFreqKey():
     """Handle request for ip:port/login
     
     Returns:	a list of all passed arguments in link statement 
     			>in this case<: username & password
         TYPE: array of dict
     """
+    timeStampStart = request.args.get('timeStampStart')
+    timeStampStop = request.args.get('timeStampStop')
+    parts = request.args.get('parts')
 
-    # read value of key 'username'
-    username = request.args.get('username')
-    # read value of key 'password'
-    password = request.args.get('password')
-    # print all passed arguments
+    keywords = request.args.get('keywords')
+
+
+
+    # http://127.0.0.1:5000/requestFreqKey?timeStampStart=tss&timeStampStopp=tsp&part=100&keywords%5B0%5D=bliblablub&keywords%5B0%5D=bliblablub2
+    print("%s, %s, %s, %s" % (timeStampStop, timeStampStop, parts, keywords))
     print(request.args)
 
     # returns the array of dicts as plane text in html
     # this is just to see an output while request in web browser
+
+
+
     return request.args
 
 
 # run the flask app to handle requests
-app.run()
+app.run(debug=True)
